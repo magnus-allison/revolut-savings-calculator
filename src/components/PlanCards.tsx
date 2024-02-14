@@ -12,13 +12,13 @@ interface Props {
 const PlanCards: FC<Props> = ({ plans }) => {
 	const { currency, currencyChar, plan: storePlan, setPlan } = useStore();
 	return (
-		<div className='flex flex-row justify-between gap-4 mt-4'>
+		<div className='flex flex-row justify-between sm:gap-4 gap-1 mt-4 flex-wrap sm:flex-nowrap'>
 			{plans.map((plan) => (
 				<div
 					key={plan.name}
 					onClick={() => setPlan(plan['name'])}
 					className={cn(
-						'max-w-sm rounded-md overflow-hidden border border-gray-700 transition duration-300 hover:border-sky-500 group cursor-pointer',
+						'sm:max-w-sm w-[calc(50%-0.25rem)] rounded-md overflow-hidden border border-gray-700 transition duration-300 hover:border-sky-500 group cursor-pointer',
 						plan.monthlySub[currency] === null && 'opacity-25',
 						plan.name === storePlan && 'bg-gray-900 border-gray-400'
 					)}
