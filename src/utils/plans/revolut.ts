@@ -3,7 +3,7 @@ import { type Currency } from '@/components/CurrencyChoices';
 export interface Plan {
 	name: string;
 	monthlySub: Record<Currency, number | null>;
-	year: number;
+	annualSub: Record<Currency, number | null>;
 	growth: Record<Currency, number>;
 }
 
@@ -13,9 +13,13 @@ const plans: Plan[] = [
 		monthlySub: {
 			GBP: 55.0,
 			USD: null,
-			EUR: 50.0
+			EUR: 55.0
 		},
-		year: 540,
+		annualSub: {
+			GBP: 540,
+			USD: null,
+			EUR: 540
+		},
 		growth: {
 			GBP: 0.0475,
 			USD: 0.0354,
@@ -27,9 +31,13 @@ const plans: Plan[] = [
 		monthlySub: {
 			GBP: 14.99,
 			USD: 16.99,
-			EUR: 13.99
+			EUR: 16.99
 		},
-		year: 140,
+		annualSub: {
+			GBP: 140,
+			USD: 135,
+			EUR: 135
+		},
 		growth: {
 			GBP: 0.04,
 			USD: 0.04,
@@ -41,9 +49,13 @@ const plans: Plan[] = [
 		monthlySub: {
 			GBP: 7.99,
 			USD: 9.99,
-			EUR: 7.99
+			EUR: 9.99
 		},
-		year: 80,
+		annualSub: {
+			GBP: 72,
+			USD: 72,
+			EUR: 72
+		},
 		growth: {
 			GBP: 0.03,
 			USD: 0.03,
@@ -55,9 +67,13 @@ const plans: Plan[] = [
 		monthlySub: {
 			GBP: 3.99,
 			USD: null,
-			EUR: 2.99
+			EUR: 3.99
 		},
-		year: 40,
+		annualSub: {
+			GBP: 40,
+			USD: null,
+			EUR: 40
+		},
 		growth: {
 			GBP: 0.0239,
 			USD: 0.0239,
@@ -71,7 +87,11 @@ const plans: Plan[] = [
 			USD: 0,
 			EUR: 0
 		},
-		year: 0,
+		annualSub: {
+			GBP: 0,
+			USD: 0,
+			EUR: 0
+		},
 		growth: {
 			GBP: 0.0229,
 			USD: 0.0229,

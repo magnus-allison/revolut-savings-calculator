@@ -35,8 +35,7 @@ interface RowProps {
 const Row: FC<RowProps> = ({ label, value, noBorder, main }) => {
 	const { currencyChar } = useStore();
 	return (
-		<tr>
-			<div
+			<tr
 				className={cn(
 					'mx-8 flex flex-row justify-between',
 					!noBorder && 'border-b border-[#ffffff12]'
@@ -52,7 +51,6 @@ const Row: FC<RowProps> = ({ label, value, noBorder, main }) => {
 					{currencyChar}
 					{value}
 				</td>
-			</div>
 		</tr>
 	);
 };

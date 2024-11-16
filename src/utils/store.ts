@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type { Currency, CurrencyChar } from '@/components/CurrencyChoices';
-import { type Plan } from './plans';
+import { type Plan } from './plans/revolut';
 
 export interface Store {
 	currencyChar: CurrencyChar;

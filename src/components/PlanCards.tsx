@@ -1,7 +1,7 @@
 'use client';
 import { type FC } from 'react';
 import Image from 'next/image';
-import { Plan } from '@/utils/plans';
+import { Plan } from '@/utils/plans/revolut';
 import useStore from '@/utils/store';
 import { cn } from '@/utils/cn';
 
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const PlanCards: FC<Props> = ({ plans }) => {
-	const { currency, currencyChar, plan: storePlan, setPlan } = useStore();
+	const { currency, currencyChar, plan: storePlan, setPlan, billing } = useStore();
 	return (
 		<div className='flex flex-row justify-between sm:gap-4 gap-1 mt-4 flex-wrap sm:flex-nowrap'>
 			{plans.map((plan) => (
@@ -19,7 +19,7 @@ const PlanCards: FC<Props> = ({ plans }) => {
 					onClick={() => setPlan(plan['name'])}
 					className={cn(
 						'sm:max-w-sm w-[calc(50%-0.25rem)] rounded-md overflow-hidden border border-gray-700 transition duration-300 hover:border-sky-500 group cursor-pointer',
-						plan.monthlySub[currency] === null && 'opacity-25',
+						plan.monthlySub[currency] === null && 'opacity-25 pointer-events-none',
 						plan.name === storePlan && 'bg-gray-900 border-gray-400'
 					)}
 				>
@@ -35,7 +35,13 @@ const PlanCards: FC<Props> = ({ plans }) => {
 					<div className='px-4 py-4'>
 						<div className='text'>{plan.name}</div>
 						<div className='mt-2'>
-							{plan.monthlySub[currency] !== null && (
+							{billing === 'annual' && plan.annualSub[currency] !== null && (
+								<p className='text-gray-600 text-xs'>
+									{currencyChar}
+									{plan.annualSub[currency]} / Year
+								</p>
+							)}
+							{billing === 'monthly' && plan.monthlySub[currency] !== null && (
 								<p className='text-gray-600 text-xs'>
 									{currencyChar}
 									{plan.monthlySub[currency]} / Month

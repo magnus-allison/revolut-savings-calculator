@@ -1,4 +1,4 @@
-import { type Plan } from './plans';
+import { type Plan } from './plans/revolut';
 import { type Store } from './store';
 import { type DataItem } from '@/components/Chart';
 
@@ -13,6 +13,7 @@ export interface CalculatedData {
 
 type CalculateInput = (
 	currency: Store['currency'],
+	billing: Store['billing'],
 	balance: Store['balance'],
 	duration: Store['duration'],
 	plan: Plan
@@ -23,11 +24,10 @@ const formatDate = (date: Date) => {
 	return date.toISOString().split('T')[0];
 };
 
-const calculateYear: CalculateInput = (currency, balance, duration, plan) => {
+const calculateYear: CalculateInput = (currency, billing, balance, duration, plan) => {
 	if (!balance) balance = '0';
 
 	const contribution = 0;
-	const billing: 'monthly' | 'annual' = 'monthly';
 
 	let accumulated = parseFloat(balance);
 	let day0 = 0;
@@ -51,8 +51,8 @@ const calculateYear: CalculateInput = (currency, balance, duration, plan) => {
 	}
 
 	const interest = accumulated - parseFloat(balance) - contribution * 12;
-	// const calculated = interest - (billing === 'annual' ? plan.year : plan.monthlySub[currency] * 12);
-	const calculated = interest - plan.monthlySub[currency]! * 12;
+	const calculated =
+		interest - (billing === 'annual' ? plan.annualSub[currency]! : plan.monthlySub[currency]! * 12);
 
 	return {
 		total: accumulated.toFixed(2),

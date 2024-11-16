@@ -1,7 +1,6 @@
 'use client';
 import { type FC, useEffect, useRef } from 'react';
 import { createChart, ColorType } from 'lightweight-charts';
-import { time } from 'console';
 
 export interface DataItem {
 	time: string;
@@ -26,7 +25,8 @@ const Chart: FC<Props> = ({ data }) => {
 		const chart = createChart(chartContainerRef.current, {
 			layout: {
 				background: { type: ColorType.Solid, color: 'transparent' },
-				textColor: '#FFFFFF'
+				textColor: '#FFFFFF',
+				attributionLogo: false
 			},
 			width: chartContainerRef.current.clientWidth,
 			height: 300,

@@ -6,7 +6,7 @@ import PlanCards from '@/components/PlanCards';
 import SavingsInput from '@/components/SavingsInput';
 import Section from '@/components/Section';
 import TimeDuration from '@/components/TimeDuration';
-import { plans } from '@/utils/plans';
+import { plans } from '@/utils/plans/revolut';
 
 const Home = () => {
 	return (
