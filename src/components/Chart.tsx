@@ -1,6 +1,6 @@
 'use client';
 import { type FC, useEffect, useRef } from 'react';
-import { createChart, ColorType } from 'lightweight-charts';
+import { AreaSeries, ColorType, createChart } from 'lightweight-charts';
 
 export interface DataItem {
 	time: string;
@@ -25,7 +25,7 @@ const Chart: FC<Props> = ({ data }) => {
 		const chart = createChart(chartContainerRef.current, {
 			layout: {
 				background: { type: ColorType.Solid, color: 'transparent' },
-				textColor: '#FFFFFF',
+				textColor: '#cbd5e1',
 				attributionLogo: false
 			},
 			width: chartContainerRef.current.clientWidth,
@@ -47,14 +47,13 @@ const Chart: FC<Props> = ({ data }) => {
 			}
 		});
 
-		chart.timeScale().fitContent();
-
-		const newSeries = chart.addAreaSeries({
-			lineColor: '#0ea5e9',
-			topColor: '#0ea5e9',
-			bottomColor: '#0ea5e922'
+		const newSeries = chart.addSeries(AreaSeries, {
+			lineColor: '#0b6dc8',
+			topColor: '#0b6dc8aa',
+			bottomColor: '#0b6dc822'
 		});
 		newSeries.setData(data);
+		chart.timeScale().fitContent();
 
 		window.addEventListener('resize', handleResize);
 
@@ -64,7 +63,7 @@ const Chart: FC<Props> = ({ data }) => {
 		};
 	}, [data]);
 
-	return <div ref={chartContainerRef} className='mt-8' />;
+	return <div ref={chartContainerRef} className='chart-container' />;
 };
 
 export default Chart;

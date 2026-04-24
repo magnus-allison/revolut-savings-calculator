@@ -5,28 +5,45 @@ import { type FC } from 'react';
 
 const BillingToggle: FC = () => {
 	const { billing, setBilling } = useStore();
-	return (
-		<div>
-			<label className='relative inline-flex items-center cursor-pointer'>
-				<input
-					type='checkbox'
-					value={billing}
-					className='sr-only peer'
-					checked={billing === 'annual'}
-					onChange={() => setBilling(billing === 'annual' ? 'monthly' : 'annual')}
-				/>
 
-				<div className="w-7 h-4 bg-transparent border border-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-gray-700 after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-gray-700 after:border-gray-700 after:border after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:bg-gray-900"></div>
-				<h3
+	return (
+		<button
+			type='button'
+			className='billing-toggle'
+			aria-pressed={billing === 'annual'}
+			aria-label={`Billing period: ${billing}`}
+			onClick={() => setBilling(billing === 'annual' ? 'monthly' : 'annual')}
+		>
+			<span
+				className={cn(
+					'billing-toggle-text',
+					billing === 'monthly' && 'billing-toggle-text--active'
+				)}
+			>
+				Monthly
+			</span>
+			<span
+				className={cn(
+					'billing-toggle-track',
+					billing === 'annual' && 'billing-toggle-track--active'
+				)}
+			>
+				<span
 					className={cn(
-						'text-xs ml-2 uppercase text-gray-500',
-						billing === 'annual' && 'text-gray-300'
+						'billing-toggle-thumb',
+						billing === 'annual' && 'billing-toggle-thumb--active'
 					)}
-				>
-					Annual Billing
-				</h3>
-			</label>
-		</div>
+				/>
+			</span>
+			<span
+				className={cn(
+					'billing-toggle-text',
+					billing === 'annual' && 'billing-toggle-text--active'
+				)}
+			>
+				Annual
+			</span>
+		</button>
 	);
 };
 

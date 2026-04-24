@@ -6,25 +6,31 @@ interface Props {}
 
 const SavingsInput: FC<Props> = () => {
 	const { currency, currencyChar, balance, setBalance } = useStore();
+
+	const handleAmountChange = (rawValue: string) => {
+		const cleanedValue = rawValue.replace(/,/g, '').replace(/[^\d.]/g, '');
+		const [whole, ...decimals] = cleanedValue.split('.');
+		const normalized = decimals.length > 0 ? `${whole}.${decimals.join('')}` : whole;
+		setBalance(normalized || null);
+	};
+
 	return (
-		<div>
-			<div className='relative mt-4 max-w-60'>
-				<div className='absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none'>
-					<div className='flex align-middle flex-row'>
-						<p className='bg-gray-700 py-0.5 px-2 rounded-sm'>
-							{currency}
-							{currencyChar}
-						</p>
-					</div>
-				</div>
-				<input
-					type='text'
-					value={balance || ''}
-					onChange={(e) => setBalance(e.target.value)}
-					className='border border-gray-700 text-white text-sm rounded-md focus:border-sky-500 focus:outline-none block w-full ps-20 p-2.5 placeholder-gray-400 bg-transparent'
-					placeholder='5,000'
-				/>
+		<div className='input-field'>
+			<div className='input-prefix'>
+				<p className='input-prefix-badge'>
+					{currency}
+					{currencyChar}
+				</p>
 			</div>
+			<input
+				type='text'
+				value={balance || ''}
+				onChange={(e) => handleAmountChange(e.target.value)}
+				className='text-input'
+				inputMode='decimal'
+				aria-label='Savings amount'
+				placeholder='5000'
+			/>
 		</div>
 	);
 };

@@ -9,18 +9,12 @@ interface Props {
 
 const Table: FC<Props> = ({ data }) => {
 	return (
-		<div>
-			<div className='relative overflow-x-auto shadow-md rounded-md border-[#ffffff12] border mt-4'>
-				<table className='w-full text-sm text-left text-white'>
-					<tbody className='px-8'>
-						<Row label='Final Balance' value={data.total} main />
-						<Row label='Interest Earned' value={data.interest} />
-						<Row label='Daily Interest (start)' value={data.day0} />
-						<Row label='Daily Interest (end)' value={data.day365} />
-						<Row label='Interest including Cost of Plan' value={data.calculated} noBorder />
-					</tbody>
-				</table>
-			</div>
+		<div className='results-card'>
+			<Row label='Final Balance' value={data.total} main />
+			<Row label='Interest Earned' value={data.interest} />
+			<Row label='Daily Interest (start)' value={data.day0} />
+			<Row label='Daily Interest (end)' value={data.day365} />
+			<Row label='Interest including Cost of Plan' value={data.calculated} noBorder />
 		</div>
 	);
 };
@@ -35,23 +29,19 @@ interface RowProps {
 const Row: FC<RowProps> = ({ label, value, noBorder, main }) => {
 	const { currencyChar } = useStore();
 	return (
-			<tr
-				className={cn(
-					'mx-8 flex flex-row justify-between',
-					!noBorder && 'border-b border-[#ffffff12]'
-				)}
-			>
-				<th
-					scope='row'
-					className={cn('py-4 font-medium whitespace-nowrap text-white', main && 'text-sky-500')}
-				>
-					{label}
-				</th>
-				<td className={cn('py-4', main && 'text-sky-500')}>
-					{currencyChar}
-					{value}
-				</td>
-		</tr>
+		<div
+			className={cn(
+				'results-row',
+				main && 'results-row--main',
+				noBorder && 'results-row--last'
+			)}
+		>
+			<div className='results-label'>{label}</div>
+			<div className='results-value'>
+				{currencyChar}
+				{value}
+			</div>
+		</div>
 	);
 };
 

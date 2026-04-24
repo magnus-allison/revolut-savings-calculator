@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import type { Currency, CurrencyChar } from '@/components/CurrencyChoices';
 import { type Plan } from './plans/revolut';
+import { plans } from './plans/revolut';
 
 export interface Store {
 	currencyChar: CurrencyChar;
@@ -20,7 +21,7 @@ export interface Store {
 	setDuration: (duration: number) => void;
 }
 
-const useStore = create<Store>((set) => ({
+const useStore = create<Store>((set, get) => ({
 	currencyChar: '£',
 	currency: 'GBP',
 	setCurrency: (currency) => {
@@ -28,7 +29,26 @@ const useStore = create<Store>((set) => ({
 		if (currency === 'GBP') currencyChar = '£';
 		if (currency === 'USD') currencyChar = '$';
 		if (currency === 'EUR') currencyChar = '€';
-		return set({ currency, currencyChar: currencyChar as CurrencyChar });
+
+		const { plan, billing } = get();
+		let nextPlan = plan;
+		if (plan) {
+			const selectedPlan = plans.find((p) => p.name === plan);
+			const isUnavailable =
+				billing === 'annual'
+					? selectedPlan?.annualSub[currency] === null
+					: selectedPlan?.monthlySub[currency] === null;
+
+			if (isUnavailable) {
+				nextPlan = null;
+			}
+		}
+
+		return set({
+			currency,
+			currencyChar: currencyChar as CurrencyChar,
+			plan: nextPlan
+		});
 	},
 
 	plan: null,
@@ -38,7 +58,22 @@ const useStore = create<Store>((set) => ({
 	setBalance: (balance) => set({ balance }),
 
 	billing: 'monthly',
-	setBilling: (billing) => set({ billing }),
+	setBilling: (billing) => {
+		const { plan, currency } = get();
+		let nextPlan = plan;
+		if (plan) {
+			const selectedPlan = plans.find((p) => p.name === plan);
+			const isUnavailable =
+				billing === 'annual'
+					? selectedPlan?.annualSub[currency] === null
+					: selectedPlan?.monthlySub[currency] === null;
+			if (isUnavailable) {
+				nextPlan = null;
+			}
+		}
+
+		set({ billing, plan: nextPlan });
+	},
 
 	duration: 365,
 	setDuration: (duration) => set({ duration })

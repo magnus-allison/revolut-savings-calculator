@@ -10,18 +10,19 @@ import { plans } from '@/utils/plans/revolut';
 
 const Home = () => {
 	return (
-		<main className='flex min-h-screen flex-col items-center justify-between sm:px-8 md:px-24 py-12 px-4'>
-			<div className='z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex'>
-				<div className='flex flex-col'>
-					<h2 className='text-2xl'>Revolut Savings Calculator</h2>
-					<hr className='w-full h-0.5 mt-2 bg-[#ffffff12] opacity-40 border-none outline-none' />
+		<main className='page'>
+			<div className='page-shell'>
+				<div className='page-stack'>
+					<h1 className='page-title'>Revolut Savings Calculator</h1>
+					<p className='page-subtitle'>Estimate how your savings grow across plans.</p>
+					<hr className='page-divider' />
 					<Section title='1. Select a currency'>
 						<CurrencyChoices />
 					</Section>
 					<Section
 						title={
-							<div className='flex flex-row justify-between'>
-								<h3 className='text-xs text-gray-200 uppercase'>2. Select a plan</h3>
+							<div className='section-header-row'>
+								<h3 className='section-title'>2. Select a plan</h3>
 								<BillingToggle />
 							</div>
 						}
@@ -36,6 +37,7 @@ const Home = () => {
 					</Section>
 					<Calculate />
 					<BuyCoffee />
+					<p className='page-last-updated'>Last updated: April 2026</p>
 				</div>
 			</div>
 		</main>

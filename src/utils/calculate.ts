@@ -29,7 +29,10 @@ const calculateYear: CalculateInput = (currency, billing, balance, duration, pla
 
 	const contribution = 0;
 
-	let accumulated = parseFloat(balance);
+	const normalizedBalance = balance.replace(/,/g, '');
+	const parsedBalance = parseFloat(normalizedBalance);
+	const startingBalance = Number.isFinite(parsedBalance) ? parsedBalance : 0;
+	let accumulated = startingBalance;
 	let day0 = 0;
 	let day365 = 0;
 
@@ -50,7 +53,7 @@ const calculateYear: CalculateInput = (currency, billing, balance, duration, pla
 		day && day % 365 === 0 && (day365 = accumulation);
 	}
 
-	const interest = accumulated - parseFloat(balance) - contribution * 12;
+	const interest = accumulated - startingBalance - contribution * 12;
 	const calculated =
 		interest - (billing === 'annual' ? plan.annualSub[currency]! : plan.monthlySub[currency]! * 12);
 

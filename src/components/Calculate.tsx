@@ -11,7 +11,16 @@ const Calculate: FC = () => {
 	const { currency, balance, duration, plan, billing } = useStore();
 	const result = useMemo(() => {
 		if (!plan) return;
-		const planObj = plans.filter((p) => p.name === plan)[0];
+		const planObj = plans.find((p) => p.name === plan);
+		if (!planObj) return;
+
+		const planFee =
+			billing === 'annual'
+				? planObj.annualSub[currency]
+				: planObj.monthlySub[currency];
+
+		if (planFee === null) return;
+
 		return calculateYear(currency, billing, balance, duration, planObj);
 	}, [currency, balance, duration, plan, billing]);
 

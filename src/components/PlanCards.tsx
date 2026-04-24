@@ -12,48 +12,61 @@ interface Props {
 const PlanCards: FC<Props> = ({ plans }) => {
 	const { currency, currencyChar, plan: storePlan, setPlan, billing } = useStore();
 	return (
-		<div className='flex flex-row justify-between sm:gap-4 gap-1 mt-4 flex-wrap sm:flex-nowrap'>
-			{plans.map((plan) => (
-				<div
-					key={plan.name}
-					onClick={() => setPlan(plan['name'])}
-					className={cn(
-						'sm:max-w-sm w-[calc(50%-0.25rem)] rounded-md overflow-hidden border border-gray-700 transition duration-300 hover:border-sky-500 group cursor-pointer',
-						plan.monthlySub[currency] === null && 'opacity-25 pointer-events-none',
-						plan.name === storePlan && 'bg-gray-900 border-gray-400'
-					)}
-				>
-					<div className='relative bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-transparent to-gray-900'>
-						<Image
-							className='w-full px-6 py-4 relative transition duration-300 ease-in-out transform group-hover:scale-105'
-							src={`/plans/${plan.name.toLowerCase()}.png`}
-							alt={`Revolut ${plan.name} plan`}
-							width={830}
-							height={415}
-						/>
-					</div>
-					<div className='px-4 py-4'>
-						<div className='text'>{plan.name}</div>
-						<div className='mt-2'>
-							{billing === 'annual' && plan.annualSub[currency] !== null && (
-								<p className='text-gray-600 text-xs'>
-									{currencyChar}
-									{plan.annualSub[currency]} / Year
-								</p>
-							)}
-							{billing === 'monthly' && plan.monthlySub[currency] !== null && (
-								<p className='text-gray-600 text-xs'>
-									{currencyChar}
-									{plan.monthlySub[currency]} / Month
-								</p>
-							)}
-							<p className='text-gray-600 text-xs'>
-								{(plan.growth[currency] * 100).toFixed(2)}% AER
-							</p>
+		<div className='plan-grid'>
+			{plans.map((plan) => {
+				const unavailable =
+					billing === 'annual'
+						? plan.annualSub[currency] === null
+						: plan.monthlySub[currency] === null;
+
+				return (
+					<button
+						key={plan.name}
+						onClick={() => !unavailable && setPlan(plan.name)}
+						type='button'
+						disabled={unavailable}
+						aria-disabled={unavailable}
+						className={cn(
+							'plan-card',
+							unavailable && 'plan-card--disabled',
+							plan.name === storePlan && 'plan-card--active'
+						)}
+					>
+						<div className='plan-card-media'>
+							<Image
+								className='plan-card-image'
+								src={`/plans/${plan.name.toLowerCase()}.png`}
+								alt={`Revolut ${plan.name} plan`}
+								width={830}
+								height={415}
+							/>
 						</div>
-					</div>
-				</div>
-			))}
+						<div className='plan-card-content'>
+							<div className='plan-card-name'>{plan.name}</div>
+							<div className='plan-card-meta'>
+								{billing === 'annual' && plan.annualSub[currency] !== null && (
+									<p className='plan-card-meta-line'>
+										{currencyChar}
+										{plan.annualSub[currency]} / year
+									</p>
+								)}
+								{billing === 'monthly' && plan.monthlySub[currency] !== null && (
+									<p className='plan-card-meta-line'>
+										{currencyChar}
+										{plan.monthlySub[currency]} / month
+									</p>
+								)}
+								{unavailable && (
+									<p className='plan-card-meta-unavailable'>Not available in {currency}</p>
+								)}
+								<p className='plan-card-meta-line'>
+									{(plan.growth[currency] * 100).toFixed(2)}% AER
+								</p>
+							</div>
+						</div>
+					</button>
+				);
+			})}
 		</div>
 	);
 };

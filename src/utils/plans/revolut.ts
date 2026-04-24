@@ -13,7 +13,7 @@ const plans: Plan[] = [
 		monthlySub: {
 			GBP: 55.0,
 			USD: null,
-			EUR: 55.0
+			EUR: 50.0
 		},
 		annualSub: {
 			GBP: 540,
@@ -21,9 +21,9 @@ const plans: Plan[] = [
 			EUR: 540
 		},
 		growth: {
-			GBP: 0.0475,
-			USD: 0.0354,
-			EUR: 0.0214
+			GBP: 0.04,
+			USD: 0.035,
+			EUR: 0.025
 		}
 	},
 	{
@@ -31,17 +31,17 @@ const plans: Plan[] = [
 		monthlySub: {
 			GBP: 14.99,
 			USD: 16.99,
-			EUR: 16.99
+			EUR: 15.99
 		},
 		annualSub: {
 			GBP: 140,
-			USD: 135,
-			EUR: 135
+			USD: 149.99,
+			EUR: 155
 		},
 		growth: {
-			GBP: 0.04,
-			USD: 0.04,
-			EUR: 0.04
+			GBP: 0.0351,
+			USD: 0.035,
+			EUR: 0.02
 		}
 	},
 	{
@@ -52,14 +52,14 @@ const plans: Plan[] = [
 			EUR: 9.99
 		},
 		annualSub: {
-			GBP: 72,
-			USD: 72,
-			EUR: 72
+			GBP: 80,
+			USD: 94.99,
+			EUR: 100
 		},
 		growth: {
-			GBP: 0.03,
+			GBP: 0.0325,
 			USD: 0.03,
-			EUR: 0.03
+			EUR: 0.015
 		}
 	},
 	{
@@ -75,9 +75,9 @@ const plans: Plan[] = [
 			EUR: 40
 		},
 		growth: {
-			GBP: 0.0239,
-			USD: 0.0239,
-			EUR: 0.0239
+			GBP: 0.03,
+			USD: 0.025,
+			EUR: 0.01
 		}
 	},
 	{
@@ -93,9 +93,9 @@ const plans: Plan[] = [
 			EUR: 0
 		},
 		growth: {
-			GBP: 0.0229,
-			USD: 0.0229,
-			EUR: 0.0229
+			GBP: 0.03,
+			USD: 0.025,
+			EUR: 0.01
 		}
 	}
 ];
